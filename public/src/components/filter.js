@@ -44,7 +44,7 @@ class Filter extends React.Component{
     }
 
     refresh() {
-        
+
     }
 
     render() {
@@ -71,6 +71,9 @@ class Filter extends React.Component{
                             </DropdownMenu>
                         </Dropdown>
                   </Col>
+                </Row>
+                <Row>
+                    
                 </Row>
             </div>
         )
