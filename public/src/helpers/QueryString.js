@@ -22,6 +22,9 @@ export function parseQueryString(parameters = {})
     const adQueryID = (parameters.adQueryID != null) ? parameters.adQueryID : DEFAULT_AD_QUERY_ID;
     queryString += 'ad_query_id=' + adQueryID + '&';
 
+    const city = (parameters.city != null) ? parameters.city : "";
+    queryString += 'city=' + city + '&';
+
     queryString = queryString.substr(0, queryString.length - 1);
     return queryString;
 }
