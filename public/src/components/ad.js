@@ -59,6 +59,7 @@ class Ad extends React.Component{
                 <td>{ad.mileage}</td>
                 <td><Prices prices={ad.prices} /></td>
                 <td>{ad.phone_number}</td>
+                <td>{ad.dateAdded}</td>
             </tr>
         )
     }

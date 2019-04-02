@@ -69,13 +69,17 @@ class Combobox extends React.Component{
           //   adQueryID: e.currentTarget.getAttribute("id")
           // }
           // this.setState(newState)
-          const { getAllAds, filterAds, setAdsNoLoad } = this.props
+          const { getAllAds, filterAds, setAdsNoLoad, setAdQueryID } = this.props
 
           setAdsNoLoad()
 
+          const adQueryID = e.currentTarget.getAttribute("id")
+
           const params = {
-              adQueryID: e.currentTarget.getAttribute("id")
+              adQueryID: adQueryID
           }
+
+          setAdQueryID(adQueryID)
 
           const queryString = parseQueryString(params)
           console.log(API_ENDPOINT + 'getData.php'  + queryString)

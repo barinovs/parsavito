@@ -16,7 +16,8 @@ import { getAllAds } from '../actions/index'
 
 import { API_ENDPOINT } from '../helpers/Constant'
 
-import { parseQueryString } from '../helpers'
+import { parseQueryString, DEFAULT_ORDER_BY } from '../helpers'
+
 
 class Filter extends React.Component{
     constructor(props) {
@@ -24,17 +25,41 @@ class Filter extends React.Component{
         this.state = {
             dropdownOpen: false,
             title: 'ID',
-            itemPerPage: this.props.itemPerPage
+            itemPerPage: this.props.itemPerPage,
+            orderBy: DEFAULT_ORDER_BY
         }
         this.toggle = this.toggle.bind(this)
         this.changeTitle = this.changeTitle.bind(this)
         this.refresh = this.refresh.bind(this)
     }
 
-    toggle() {
+    componentDidMount() {
+
+        TableHeaders.forEach( el => {
+            if (el.field == DEFAULT_ORDER_BY) {
+                this.setState({
+                    title: el.title
+                })
+            }
+        } )
+
+    }
+
+    toggle(sender) {
         this.setState(prevState => ({
           dropdownOpen: !prevState.dropdownOpen
         }));
+
+        if (!this.state.dropdownOpen) {
+
+        }
+        else {
+            this.setState({
+                orderBy: sender.currentTarget.getAttribute("field")
+            })
+        }
+
+
     }
 
     changeTitle(sender) {
@@ -53,13 +78,17 @@ class Filter extends React.Component{
 
         const itemPerPage = this.itemPerPageInput.value
 
+        const { adQueryID } = this.props
+
         const params = {
-            adQueryID: 2
+            orderBy: this.state.orderBy,
+            itemPerPage: itemPerPage,
+            adQueryID: adQueryID
         }
 
         const queryString = parseQueryString(params)
 
-        console.log('itemPerPage: ' + itemPerPage);
+        console.log('item_per_page: ' + itemPerPage);
         console.log('queryString: ' + queryString);
 
 
@@ -94,7 +123,7 @@ class Filter extends React.Component{
                             <DropdownMenu>
                                 {
                                     TableHeaders.map( (item, idx) => {
-                                        return <DropdownItem key={idx} onClick={this.changeTitle} dropdownvalue={item.title}>{item.title}</DropdownItem>
+                                        return <DropdownItem key={idx} field={item.field} onClick={this.changeTitle} dropdownvalue={item.title}>{item.title}</DropdownItem>
                                     } )
                                 }
                             </DropdownMenu>
@@ -112,7 +141,8 @@ class Filter extends React.Component{
 
 const mapStateToProps = (state) => {
     return {
-         itemPerPage: state.itemPerPage
+         itemPerPage: state.itemPerPage,
+         adQueryID: state.adQueryID
     }
 }
 

@@ -6,5 +6,6 @@ export const TableHeaders = [
     {field:'yearIssue', title:'Год выпуска'},
     {field:'mileage', title:'Пробег'},
     {field:'price', title:'Цена'},
-    {field:'phone_number', title:'Телефон'}
+    {field:'phone_number', title:'Телефон'},
+    {field:'dateAdded', title:'Дата добавления'}
 ]

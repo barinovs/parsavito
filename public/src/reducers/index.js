@@ -6,14 +6,16 @@ import { ACTION_GET_ALL_ADS,
         ACTION_GET_ADS_QUERY,
         ACTION_REFRESH_ADS,
         ACTION_FILTER_ADS,
-        ACTION_SET_ADS_NO_LOAD
+        ACTION_SET_ADS_NO_LOAD,
+        ACTION_SET_AD_QUERY_ID
     } from '../constants/action-types'
 
 import { DEFAULT_ITEM_PER_PAGE,
          DEFAULT_ORDER_BY,
          DEFAULT_ORDER_TYPE,
          DEFAULT_PAGE,
-         DEFAULT_SEARCH
+         DEFAULT_SEARCH,
+         DEFAULT_AD_QUERY_ID
      } from '../helpers/Pagination';
 
 
@@ -22,7 +24,8 @@ import { DEFAULT_ITEM_PER_PAGE,
     filteredAds: new Array(),
     itemPerPage: DEFAULT_ITEM_PER_PAGE,
     adsQuery: new Array(),
-    adsIsLoad: true
+    adsIsLoad: true,
+    adQueryID: DEFAULT_AD_QUERY_ID
   };
 
 
@@ -71,6 +74,12 @@ export const rootReducer = (state = initialState, action) => {
             console.log('редюсер ACTION_SET_ADS_NO_LOAD');
             return {...state,
                         adsIsLoad: false
+                    }
+        }
+        case ACTION_SET_AD_QUERY_ID: {
+            console.log('редюсер ACTION_SET_AD_QUERY_ID');
+            return {...state,
+                        adQueryID: action.adQueryID
                     }
         }
     }

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import Combobox from '../components/combobox/combobox'
 
-import { getAllAds, filterAds, setAdsNoLoad } from '../actions/index'
+import { getAllAds, filterAds, setAdsNoLoad, setAdQueryID } from '../actions/index'
 
 class ComboboxCont extends React.Component{
     constructor(props) {
@@ -13,9 +13,9 @@ class ComboboxCont extends React.Component{
 
     render() {
         // !!!! ВОТ ТУТ НЕ ЗАБУДЬ ДОБАВИТЬ НАЗВАНИЕ ФУНКЦИИ !!!!!!!!!!!!!!!!!!!!!!!!!!!
-        const { adsQuery, getAllAds, filterAds, setAdsNoLoad } = this.props
+        const { adsQuery, getAllAds, filterAds, setAdsNoLoad, setAdQueryID } = this.props
         return(
-            <Combobox items={adsQuery} getAllAds={getAllAds} filterAds={filterAds} setAdsNoLoad={setAdsNoLoad} />
+            <Combobox items={adsQuery} getAllAds={getAllAds} filterAds={filterAds} setAdsNoLoad={setAdsNoLoad} setAdQueryID={setAdQueryID}/>
         )
     }
 }
@@ -30,7 +30,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getAllAds: bindActionCreators(getAllAds, dispatch),
         filterAds: bindActionCreators(filterAds, dispatch),
-        setAdsNoLoad: bindActionCreators(setAdsNoLoad, dispatch)
+        setAdsNoLoad: bindActionCreators(setAdsNoLoad, dispatch),
+        setAdQueryID: bindActionCreators(setAdQueryID, dispatch)
 
     }
 }

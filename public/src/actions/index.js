@@ -5,7 +5,8 @@ import {
             ACTION_GET_ADS_QUERY,
             ACTION_REFRESH_ADS,
             ACTION_FILTER_ADS,
-            ACTION_SET_ADS_NO_LOAD
+            ACTION_SET_ADS_NO_LOAD,
+            ACTION_SET_AD_QUERY_ID
         } from '../constants/action-types'
 
 // import AdService from '../services/adService'
@@ -83,5 +84,13 @@ export function setAdsNoLoad() {
     return {
         type: ACTION_SET_ADS_NO_LOAD,
         adsIsLoad: false
+    }
+}
+
+export function setAdQueryID(adQueryID) {
+    console.log('Сработал экшон setAdQueryID ');
+    return {
+        type: ACTION_SET_AD_QUERY_ID,
+        adQueryID: adQueryID
     }
 }
