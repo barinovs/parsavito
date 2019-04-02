@@ -21,7 +21,8 @@
   $db = $database->getConnection();
   $ad = new Ad($db);
 
-  $where = '%%';
+  $name = '%%';
+  $city = '%%';
   $orderBy = 't.description';
   $orderType = 'desc';
   $limit = 500;
@@ -30,7 +31,11 @@
 
   if(isset($_GET['city']))
       if(!empty($_GET['city']))
-          $where = '%' . $_GET['city'] . '%';
+          $city = '%' . $_GET['city'] . '%';
+
+  if(isset($_GET['name']))
+      if(!empty($_GET['name']))
+          $name = '%' . $_GET['name'] . '%';
 
   if(isset($_GET['order_by']))
       if(!empty($_GET['order_by']))
@@ -53,7 +58,8 @@
           $ad_query_id = $_GET['ad_query_id'];
 
   // $results = $ad->readAll();
-  $results = $ad->paginate($where, $currentPage, $limit, $orderBy, $orderType, $ad_query_id);
+  
+  $results = $ad->paginate($name, $city, $currentPage, $limit, $orderBy, $orderType, $ad_query_id);
 
   // output in json format
     echo $results;

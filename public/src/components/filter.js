@@ -78,6 +78,7 @@ class Filter extends React.Component{
 
         const itemPerPage = this.itemPerPageInput.value
         const city = this.cityInput.value
+        const name = this.nameInput.value
 
         const { adQueryID } = this.props
 
@@ -85,7 +86,8 @@ class Filter extends React.Component{
             orderBy: this.state.orderBy,
             itemPerPage: itemPerPage,
             adQueryID: adQueryID,
-            city: city
+            city: city,
+            name: name
         }
 
         const queryString = parseQueryString(params)
@@ -133,8 +135,8 @@ class Filter extends React.Component{
                   </Col>
                 </Row>
                 <Row>
-                    <Col sm="3">Город<input ref={(input) => this.cityInput = input}/></Col>
-                    <Col sm="3">2</Col>
+                    <Col sm="3"><label htmlFor="city">Город</label><input id="city" ref={(input) => this.cityInput = input}/></Col>
+                    <Col sm="3"><label htmlFor="name">Марка - модель</label><input id="name" ref={(input) => this.nameInput = input}/></Col>
                     <Col sm="3">3</Col>
                 </Row>
             </div>

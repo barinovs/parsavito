@@ -1,4 +1,4 @@
-import { DEFAULT_ITEM_PER_PAGE, DEFAULT_ORDER_BY, DEFAULT_ORDER_TYPE, DEFAULT_PAGE, DEFAULT_SEARCH, DEFAULT_AD_QUERY_ID } from './Pagination';
+import { DEFAULT_ITEM_PER_PAGE, DEFAULT_ORDER_BY, DEFAULT_ORDER_TYPE, DEFAULT_PAGE, DEFAULT_NAME, DEFAULT_AD_QUERY_ID } from './Pagination';
 
 export function parseQueryString(parameters = {})
 {
@@ -13,9 +13,6 @@ export function parseQueryString(parameters = {})
     const orderType = (parameters.orderType != null) ? parameters.orderType : DEFAULT_ORDER_TYPE;
     queryString += 'order_type=' + orderType + '&';
 
-    const search = (parameters.search != null) ? parameters.search : DEFAULT_SEARCH;
-    queryString += 'name=' + search + '&';
-
     const page = (parameters.page != null) ? parameters.page : DEFAULT_PAGE;
     queryString += 'page=' + page + '&';
 
@@ -24,6 +21,9 @@ export function parseQueryString(parameters = {})
 
     const city = (parameters.city != null) ? parameters.city : "";
     queryString += 'city=' + city + '&';
+
+    const name = (parameters.name != null) ? parameters.name : "";
+    queryString += 'name=' + name + '&';
 
     queryString = queryString.substr(0, queryString.length - 1);
     return queryString;
