@@ -11,13 +11,13 @@ import { Dropdown,
 import { TableHeaders } from '../helpers'
 import ComboboxCont from '../containers/combobox'
 import axios from 'axios'
+import InputRange from 'react-input-range'
 
 import { getAllAds } from '../actions/index'
 
 import { API_ENDPOINT } from '../helpers/Constant'
 
 import { parseQueryString, DEFAULT_ORDER_BY } from '../helpers'
-
 
 class Filter extends React.Component{
     constructor(props) {
@@ -26,7 +26,8 @@ class Filter extends React.Component{
             dropdownOpen: false,
             title: 'ID',
             itemPerPage: this.props.itemPerPage,
-            orderBy: DEFAULT_ORDER_BY
+            orderBy: DEFAULT_ORDER_BY,
+            value: { min: 2, max: 10 }
         }
         this.toggle = this.toggle.bind(this)
         this.changeTitle = this.changeTitle.bind(this)
@@ -110,6 +111,7 @@ class Filter extends React.Component{
     }
 
     render() {
+
         return(
             <div>
                 <Row>
@@ -137,7 +139,17 @@ class Filter extends React.Component{
                 <Row>
                     <Col sm="3"><label htmlFor="city">Город</label><input id="city" ref={(input) => this.cityInput = input}/></Col>
                     <Col sm="3"><label htmlFor="name">Марка - модель</label><input id="name" ref={(input) => this.nameInput = input}/></Col>
-                    <Col sm="3">3</Col>
+                    <Col sm="3">
+                        <form className="form">
+                            <InputRange
+                                      draggableTrack
+                                      maxValue={20}
+                                      minValue={0}
+                                      onChange={value => this.setState({ value5: value })}
+                                      onChangeComplete={value => console.log(value)}
+                                      value={this.state.value} />
+                        </form>
+                    </Col>
                 </Row>
             </div>
         )
