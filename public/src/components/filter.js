@@ -10,15 +10,21 @@ import { Dropdown,
 
 import { TableHeaders } from '../helpers'
 import ComboboxCont from '../containers/combobox'
+import axios from 'axios'
 
 import { getAllAds } from '../actions/index'
+
+import { API_ENDPOINT } from '../helpers/Constant'
+
+import { parseQueryString } from '../helpers'
 
 class Filter extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
             dropdownOpen: false,
-            title: 'ID'
+            title: 'ID',
+            itemPerPage: this.props.itemPerPage
         }
         this.toggle = this.toggle.bind(this)
         this.changeTitle = this.changeTitle.bind(this)
@@ -45,6 +51,29 @@ class Filter extends React.Component{
 
     refresh() {
 
+        const itemPerPage = this.itemPerPageInput.value
+
+        const params = {
+            adQueryID: 2
+        }
+
+        const queryString = parseQueryString(params)
+
+        console.log('itemPerPage: ' + itemPerPage);
+        console.log('queryString: ' + queryString);
+
+
+        // axios.get(API_ENDPOINT + 'getData.php'  + queryString,
+        //           {
+        //               headers: { 'Content-Type': 'application/json' }
+        //           })
+        // .then(response => {
+        //     getAllAds(response.data, params.adQueryID)
+        //     filterAds(response.data.records)
+        // })
+        // .catch(error => {
+        //     console.log(error);
+        // })
     }
 
     render() {
@@ -55,7 +84,7 @@ class Filter extends React.Component{
                 </Row>
                 <Row>
                   <Col sm="3"><ComboboxCont /></Col>
-                  <Col sm="3">Объявлений на странице <input /></Col>
+                  <Col sm="3">Объявлений на странице <input ref={(input) => this.itemPerPageInput = input}/></Col>
                   <Col sm="3">
                       Упорядочить по полю
                         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -73,7 +102,7 @@ class Filter extends React.Component{
                   </Col>
                 </Row>
                 <Row>
-                    
+                    Строка
                 </Row>
             </div>
         )
@@ -81,16 +110,16 @@ class Filter extends React.Component{
 
 }
 
-// const mapStateToProps = (state) => {
-//     return {
-//          : state.
-//     }
-// }
-//
+const mapStateToProps = (state) => {
+    return {
+         itemPerPage: state.itemPerPage
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         getAllAds: bindActionCreators(getAllAds, dispatch)
     }
 }
 //export default connect(null, null)(Filter)
-export default connect(null, mapDispatchToProps)(Filter)
+export default connect(mapStateToProps, mapDispatchToProps)(Filter)
