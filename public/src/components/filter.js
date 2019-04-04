@@ -11,7 +11,10 @@ import { Dropdown,
 import { TableHeaders } from '../helpers'
 import ComboboxCont from '../containers/combobox'
 import axios from 'axios'
-import InputRange from 'react-input-range'
+
+import SliderComponent from './slider'
+
+import Slider2 from './slider2'
 
 import { getAllAds } from '../actions/index'
 
@@ -27,11 +30,15 @@ class Filter extends React.Component{
             title: 'ID',
             itemPerPage: this.props.itemPerPage,
             orderBy: DEFAULT_ORDER_BY,
-            value: { min: 2, max: 10 }
+            yearMinDefault: 1940,
+            yearMaxDefault: 2019,
+            yearMin: 1940,
+            yearMax: 2019
         }
         this.toggle = this.toggle.bind(this)
         this.changeTitle = this.changeTitle.bind(this)
         this.refresh = this.refresh.bind(this)
+        this.setSliderValue = this.setSliderValue.bind(this)
     }
 
     componentDidMount() {
@@ -81,6 +88,8 @@ class Filter extends React.Component{
         const city = this.cityInput.value
         const name = this.nameInput.value
 
+        const { yearMin, yearMax } = this.state
+
         const { adQueryID } = this.props
 
         const params = {
@@ -88,7 +97,9 @@ class Filter extends React.Component{
             itemPerPage: itemPerPage,
             adQueryID: adQueryID,
             city: city,
-            name: name
+            name: name,
+            yearMin: yearMin,
+            yearMax: yearMax
         }
 
         const queryString = parseQueryString(params)
@@ -110,10 +121,18 @@ class Filter extends React.Component{
         // })
     }
 
-    render() {
+    setSliderValue(value) {
+        this.setState({
+            yearMin: value.value.min,
+            yearMax: value.value.max
+        })
+    }
 
+    render() {
+        const { yearMinDefault, yearMaxDefault } = this.state
         return(
             <div>
+
                 <Row>
                     <input type="button" value="Обновить" className="btn btn-refresh" onClick={this.refresh} />
                 </Row>
@@ -140,15 +159,8 @@ class Filter extends React.Component{
                     <Col sm="3"><label htmlFor="city">Город</label><input id="city" ref={(input) => this.cityInput = input}/></Col>
                     <Col sm="3"><label htmlFor="name">Марка - модель</label><input id="name" ref={(input) => this.nameInput = input}/></Col>
                     <Col sm="3">
-                        <form className="form">
-                            <InputRange
-                                      draggableTrack
-                                      maxValue={20}
-                                      minValue={0}
-                                      onChange={value => this.setState({ value5: value })}
-                                      onChangeComplete={value => console.log(value)}
-                                      value={this.state.value} />
-                        </form>
+                        <label>Год выпуска</label>
+                        <Slider2 min={yearMinDefault} max={yearMaxDefault} setSliderValue={this.setSliderValue}/>
                     </Col>
                 </Row>
             </div>

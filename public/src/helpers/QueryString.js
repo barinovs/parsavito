@@ -25,6 +25,12 @@ export function parseQueryString(parameters = {})
     const name = (parameters.name != null) ? parameters.name : "";
     queryString += 'name=' + name + '&';
 
+    const yearMin = (parameters.yearMin != null) ? parameters.yearMin : "";
+    queryString += 'year_min=' + yearMin + '&';
+
+    const yearMax = (parameters.yearMax != null) ? parameters.yearMax : "";
+    queryString += 'year_max=' + yearMax + '&';
+
     queryString = queryString.substr(0, queryString.length - 1);
     return queryString;
 }

@@ -57,9 +57,17 @@
       if(!empty($_GET['ad_query_id']))
           $ad_query_id = $_GET['ad_query_id'];
 
+  if(isset($_GET['year_min']))
+      if(!empty($_GET['year_min']))
+          $year_min = intval($_GET['year_min']);
+
+  if(isset($_GET['year_max']))
+      if(!empty($_GET['year_max']))
+          $year_max = intval($_GET['year_max']);
+
   // $results = $ad->readAll();
-  
-  $results = $ad->paginate($name, $city, $currentPage, $limit, $orderBy, $orderType, $ad_query_id);
+  // var_dump($_GET);
+  $results = $ad->paginate($name, $city, $currentPage, $limit, $orderBy, $orderType, $ad_query_id, $year_min, $year_max);
 
   // output in json format
     echo $results;
