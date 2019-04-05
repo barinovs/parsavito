@@ -52,6 +52,7 @@ class Combobox extends React.Component{
       const queryString = ''
       const url = API_ENDPOINT + 'getAdsQuery.php' + queryString
 
+      // Событие при открытии списка
       if (!this.state.dropdownOpen) {
 
           axios.get(url, {
@@ -63,15 +64,13 @@ class Combobox extends React.Component{
               })
           })
       }
+      // Событие при выборе элемента списка
       else {
-          //
-          // const newState = {
-          //   adQueryID: e.currentTarget.getAttribute("id")
-          // }
-          // this.setState(newState)
-          const { getAllAds, filterAds, setAdsNoLoad, setAdQueryID } = this.props
 
-          setAdsNoLoad()
+          // const { getAllAds, filterAds, setAdsNoLoad, setAdQueryID } = this.props
+          const { setAdQueryID } = this.props
+
+          // setAdsNoLoad()
 
           const adQueryID = e.currentTarget.getAttribute("id")
 
@@ -81,20 +80,20 @@ class Combobox extends React.Component{
 
           setAdQueryID(adQueryID)
 
-          const queryString = parseQueryString(params)
-          console.log(API_ENDPOINT + 'getData.php'  + queryString)
-
-          axios.get(API_ENDPOINT + 'getData.php'  + queryString,
-                    {
-                        headers: { 'Content-Type': 'application/json' }
-                    })
-          .then(response => {
-              getAllAds(response.data, params.adQueryID)
-              filterAds(response.data.records)
-          })
-          .catch(error => {
-              console.log(error);
-          })
+          // const queryString = parseQueryString(params)
+          // console.log(API_ENDPOINT + 'getData.php'  + queryString)
+          //
+          // axios.get(API_ENDPOINT + 'getData.php'  + queryString,
+          //           {
+          //               headers: { 'Content-Type': 'application/json' }
+          //           })
+          // .then(response => {
+          //     getAllAds(response.data, params.adQueryID)
+          //     filterAds(response.data.records)
+          // })
+          // .catch(error => {
+          //     console.log(error);
+          // })
       }
     }
 

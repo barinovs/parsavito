@@ -16,7 +16,7 @@ import SliderComponent from './slider'
 
 import Slider2 from './slider2'
 
-import { getAllAds } from '../actions/index'
+import { getAllAds, setAdsNoLoad } from '../actions/index'
 
 import { API_ENDPOINT } from '../helpers/Constant'
 
@@ -98,7 +98,9 @@ class Filter extends React.Component{
 
         const { yearMin, yearMax, mileageMin, mileageMax, priceMin, priceMax } = this.state
 
-        const { adQueryID } = this.props
+        const { adQueryID, getAllAds, setAdsNoLoad } = this.props
+
+        setAdsNoLoad()
 
         const params = {
             orderBy: this.state.orderBy,
@@ -119,18 +121,16 @@ class Filter extends React.Component{
         console.log('item_per_page: ' + itemPerPage);
         console.log('queryString: ' + queryString);
 
-
-        // axios.get(API_ENDPOINT + 'getData.php'  + queryString,
-        //           {
-        //               headers: { 'Content-Type': 'application/json' }
-        //           })
-        // .then(response => {
-        //     getAllAds(response.data, params.adQueryID)
-        //     filterAds(response.data.records)
-        // })
-        // .catch(error => {
-        //     console.log(error);
-        // })
+        axios.get(API_ENDPOINT + 'getData.php'  + queryString,
+                  {
+                      headers: { 'Content-Type': 'application/json' }
+                  })
+        .then(response => {
+            getAllAds(response.data, params.adQueryID)
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
     setSliderValue(value, paramType) {
@@ -222,7 +222,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getAllAds: bindActionCreators(getAllAds, dispatch)
+        getAllAds: bindActionCreators(getAllAds, dispatch),
+        setAdsNoLoad: bindActionCreators(setAdsNoLoad, dispatch)
     }
 }
 //export default connect(null, null)(Filter)

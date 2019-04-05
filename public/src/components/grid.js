@@ -81,7 +81,7 @@ class Grid extends React.Component{
     render() {
         const { adsIsLoad } = this.props
         // const ads = this.state.data
-        const ads = this.props.filteredAds
+        const ads = this.props.ads
 
         const headers = TableHeaders
 
