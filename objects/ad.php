@@ -174,9 +174,14 @@ class Ad {
          // echo '$adsCount ' . strval($adsCount['adsCount']);
 
 
-        $query = "SELECT id, dateAdded, url, name, city, kpp, vin, mileage, enginePower, numberOfDoors, owners, conditionState, engineType, wheel, color, engineCapacity, model, yearIssue, bodyType, del, phone_number
-                  FROM ads a
-                  WHERE ad_query_id = :ad_query_id
+        $query = "SELECT ppp.price, a.id, dateAdded, a.url, name, city, kpp, vin, mileage, enginePower, numberOfDoors, owners, conditionState, engineType, wheel, color, engineCapacity, model, yearIssue, bodyType, del, phone_number
+                  FROM ads a,
+                  (SELECT p.url, p.price FROM pricechanges p
+                  INNER JOIN (SELECT url, MAX(dateChange) AS maxDate
+                              FROM pricechanges
+                              GROUP BY url) pp ON pp.url = p.url AND p.dateChange = pp.maxDate ) ppp
+                  WHERE ppp.url = a.url
+                  AND ad_query_id = :ad_query_id
                   AND city LIKE :city
                   AND name LIKE :name
                   AND del='0'
@@ -202,18 +207,18 @@ class Ad {
 
         $urls = '';
 
-        foreach ($ads as $key => $value) {
-          foreach ($value as $_key => $_value) {
-            $ads_to_json[$key][$_key] = $_value;
-
-            $queryPrices = "SELECT DISTINCT price, datechange FROM pricechanges WHERE url = '".$ads[$key]["url"]."' ORDER BY datechange desc ";
-            $stmt = $this->conn->prepare($queryPrices);
-            $stmt -> execute();
-            $prices = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            $ads_to_json[$key]["prices"] = $prices;
-          }
-        };
+        // foreach ($ads as $key => $value) {
+        //   foreach ($value as $_key => $_value) {
+        //     $ads_to_json[$key][$_key] = $_value;
+        //
+        //     $queryPrices = "SELECT DISTINCT price, datechange FROM pricechanges WHERE url = '".$ads[$key]["url"]."' ORDER BY datechange desc ";
+        //     $stmt = $this->conn->prepare($queryPrices);
+        //     $stmt -> execute();
+        //     $prices = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        //
+        //     $ads_to_json[$key]["prices"] = $prices;
+        //   }
+        // };
 
         // var_dump($_GET);
         // echo '</br>';
@@ -222,7 +227,7 @@ class Ad {
         // echo $query . '</br>';
         //
         // echo "Количество строк: " . count($ads);
-        $ads_to_json1["records"] = $ads_to_json;
+        $ads_to_json1["records"] = $ads;
         $ads_to_json1["recordCount"] = $adsCount;
         return json_encode($ads_to_json1);
 

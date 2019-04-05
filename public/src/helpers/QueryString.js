@@ -37,6 +37,12 @@ export function parseQueryString(parameters = {})
     const mileageMax = (parameters.mileageMax != null) ? parameters.mileageMax : "";
     queryString += 'mileage_max=' + mileageMax + '&';
 
+    const priceMin = (parameters.priceMin != null) ? parameters.priceMin : "";
+    queryString += 'price_min=' + priceMin + '&';
+
+    const priceMax = (parameters.priceMax != null) ? parameters.priceMax : "";
+    queryString += 'price_max=' + priceMax + '&';
+
     queryString = queryString.substr(0, queryString.length - 1);
     return queryString;
 }

@@ -37,7 +37,11 @@ class Filter extends React.Component{
             mileageMinDefault: 0,
             mileageMaxDefault: 1000000,
             mileageMin: 0,
-            mileageMax: 1000000
+            mileageMax: 1000000,
+            priceMinDefault: 0,
+            priceMaxDefault: 1000000,
+            priceMin: 0,
+            priceMax: 1000000
         }
         this.toggle = this.toggle.bind(this)
         this.changeTitle = this.changeTitle.bind(this)
@@ -92,7 +96,7 @@ class Filter extends React.Component{
         const city = this.cityInput.value
         const name = this.nameInput.value
 
-        const { yearMin, yearMax, mileageMin, mileageMax } = this.state
+        const { yearMin, yearMax, mileageMin, mileageMax, priceMin, priceMax } = this.state
 
         const { adQueryID } = this.props
 
@@ -105,7 +109,9 @@ class Filter extends React.Component{
             yearMin: yearMin,
             yearMax: yearMax,
             mileageMin: mileageMin,
-            mileageMax: mileageMax
+            mileageMax: mileageMax,
+            priceMin: priceMin,
+            priceMax: priceMax
         }
 
         const queryString = parseQueryString(params)
@@ -143,13 +149,20 @@ class Filter extends React.Component{
                     mileageMin: value.value.min,
                     mileageMax: value.value.max
                 })
+            }break
+            case "price": {
+                console.log('Установка price');
+                this.setState({
+                    priceMin: value.value.min,
+                    priceMax: value.value.max
+                })
             }
         }
 
     }
 
     render() {
-        const { yearMinDefault, yearMaxDefault, mileageMinDefault, mileageMaxDefault } = this.state
+        const { yearMinDefault, yearMaxDefault, mileageMinDefault, mileageMaxDefault, priceMinDefault, priceMaxDefault } = this.state
         return(
             <div>
 
@@ -188,7 +201,10 @@ class Filter extends React.Component{
                         <span>Пробег</span>
                         <Slider2 min={mileageMinDefault} max={mileageMaxDefault} setSliderValue={this.setSliderValue} paramType="mileage"/>
                     </Col>
-                    <Col sm="3"><span>Цена</span></Col>
+                    <Col sm="3">
+                        <span>Цена</span>
+                        <Slider2 min={priceMinDefault} max={priceMaxDefault} setSliderValue={this.setSliderValue} paramType="price"/>
+                    </Col>
                     <Col sm="3"><span>Дата добавления</span></Col>
                 </Row>
             </div>

@@ -30,8 +30,10 @@
   $ad_query_id = 1;
   $year_min = 1940;
   $year_max = 2020;
-  $mileage_min = 1940;
-  $mileage_max = 2020;
+  $mileage_min = 0;
+  $mileage_max = 1000000;
+  $price_min = 0;
+  $price_max = 5000000;
 
   if(isset($_GET['city']))
       if(!empty($_GET['city']))
@@ -76,6 +78,14 @@
   if(isset($_GET['mileage_max']))
       if(!empty($_GET['mileage_max']))
           $mileage_max = intval($_GET['mileage_max']);
+
+  if(isset($_GET['price_min']))
+      if(!empty($_GET['price_min']))
+          $price_min = intval($_GET['price_min']);
+
+  if(isset($_GET['price_max']))
+      if(!empty($_GET['price_max']))
+          $price_max = intval($_GET['price_max']);
 
   // $results = $ad->readAll();
   // var_dump($_GET);
