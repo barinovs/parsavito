@@ -28,6 +28,10 @@
   $limit = 500;
   $currentPage = 1;
   $ad_query_id = 1;
+  $year_min = 1940;
+  $year_max = 2020;
+  $mileage_min = 1940;
+  $mileage_max = 2020;
 
   if(isset($_GET['city']))
       if(!empty($_GET['city']))
@@ -65,9 +69,17 @@
       if(!empty($_GET['year_max']))
           $year_max = intval($_GET['year_max']);
 
+  if(isset($_GET['mileage_min']))
+      if(!empty($_GET['mileage_min']))
+          $mileage_min = intval($_GET['mileage_min']);
+
+  if(isset($_GET['mileage_max']))
+      if(!empty($_GET['mileage_max']))
+          $mileage_max = intval($_GET['mileage_max']);
+
   // $results = $ad->readAll();
   // var_dump($_GET);
-  $results = $ad->paginate($name, $city, $currentPage, $limit, $orderBy, $orderType, $ad_query_id, $year_min, $year_max);
+  $results = $ad->paginate($name, $city, $currentPage, $limit, $orderBy, $orderType, $ad_query_id, $year_min, $year_max, $mileage_min, $mileage_max);
 
   // output in json format
     echo $results;

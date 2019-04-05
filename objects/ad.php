@@ -144,7 +144,7 @@ class Ad {
       return json_encode($ads_to_json);
     }
 
-    public function paginate($name, $city, $page, $limit, $orderBy, $orderType, $ad_query_id, $year_min, $year_max) {
+    public function paginate($name, $city, $page, $limit, $orderBy, $orderType, $ad_query_id, $year_min, $year_max, $mileage_min, $mileage_max) {
 
         $ads_to_json = [];
 
@@ -157,6 +157,7 @@ class Ad {
                             AND name LIKE :name
                             AND del='0'
                             AND yearIssue BETWEEN :year_min AND :year_max
+                            AND mileage BETWEEN :mileage_min AND :mileage_max
                         ) AS x";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':ad_query_id', $ad_query_id);
@@ -164,6 +165,8 @@ class Ad {
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':year_min', $year_min);
         $stmt->bindParam(':year_max', $year_max);
+        $stmt->bindParam(':mileage_max', $mileage_max);
+        $stmt->bindParam(':mileage_min', $mileage_min);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $adsCount = $result['adsCount'];
@@ -173,7 +176,12 @@ class Ad {
 
         $query = "SELECT id, dateAdded, url, name, city, kpp, vin, mileage, enginePower, numberOfDoors, owners, conditionState, engineType, wheel, color, engineCapacity, model, yearIssue, bodyType, del, phone_number
                   FROM ads a
-                  WHERE ad_query_id = :ad_query_id AND city LIKE :city AND name LIKE :name AND del='0' AND yearIssue BETWEEN " . $year_min . " AND " . $year_max . "
+                  WHERE ad_query_id = :ad_query_id
+                  AND city LIKE :city
+                  AND name LIKE :name
+                  AND del='0'
+                  AND yearIssue BETWEEN :year_min AND :year_max
+                  AND mileage BETWEEN :mileage_min AND :mileage_max
                   ORDER BY id desc
                   LIMIT " . ($page - 1) * $limit . "," . $limit . "";
 
@@ -182,8 +190,10 @@ class Ad {
         $stmt->bindParam(':city', $city);
         $stmt->bindParam(':ad_query_id', $ad_query_id);
         $stmt->bindParam(':name', $name);
-        // $stmt->bindParam(':year_min', $year_min);
-        // $stmt->bindParam(':year_max', $year_max);
+        $stmt->bindParam(':year_min', $year_min);
+        $stmt->bindParam(':year_max', $year_max);
+        $stmt->bindParam(':mileage_max', $mileage_max);
+        $stmt->bindParam(':mileage_min', $mileage_min);
         // $stmt->bindParam(':orderBy', $orderBy);
         // $stmt->bindParam(':orderType', $orderType);
 

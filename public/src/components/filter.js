@@ -33,7 +33,11 @@ class Filter extends React.Component{
             yearMinDefault: 1940,
             yearMaxDefault: 2019,
             yearMin: 1940,
-            yearMax: 2019
+            yearMax: 2019,
+            mileageMinDefault: 0,
+            mileageMaxDefault: 1000000,
+            mileageMin: 0,
+            mileageMax: 1000000
         }
         this.toggle = this.toggle.bind(this)
         this.changeTitle = this.changeTitle.bind(this)
@@ -88,7 +92,7 @@ class Filter extends React.Component{
         const city = this.cityInput.value
         const name = this.nameInput.value
 
-        const { yearMin, yearMax } = this.state
+        const { yearMin, yearMax, mileageMin, mileageMax } = this.state
 
         const { adQueryID } = this.props
 
@@ -99,7 +103,9 @@ class Filter extends React.Component{
             city: city,
             name: name,
             yearMin: yearMin,
-            yearMax: yearMax
+            yearMax: yearMax,
+            mileageMin: mileageMin,
+            mileageMax: mileageMax
         }
 
         const queryString = parseQueryString(params)
@@ -121,15 +127,29 @@ class Filter extends React.Component{
         // })
     }
 
-    setSliderValue(value) {
-        this.setState({
-            yearMin: value.value.min,
-            yearMax: value.value.max
-        })
+    setSliderValue(value, paramType) {
+        console.log(paramType.paramType)
+        switch (paramType.paramType) {
+            case "yearIssue": {
+                console.log('Установка yearIssue');
+                this.setState({
+                    yearMin: value.value.min,
+                    yearMax: value.value.max
+                })
+            }break
+            case "mileage": {
+                console.log('Установка mileage');
+                this.setState({
+                    mileageMin: value.value.min,
+                    mileageMax: value.value.max
+                })
+            }
+        }
+
     }
 
     render() {
-        const { yearMinDefault, yearMaxDefault } = this.state
+        const { yearMinDefault, yearMaxDefault, mileageMinDefault, mileageMaxDefault } = this.state
         return(
             <div>
 
@@ -160,8 +180,16 @@ class Filter extends React.Component{
                     <Col sm="3"><label htmlFor="name">Марка - модель</label><input id="name" ref={(input) => this.nameInput = input}/></Col>
                     <Col sm="3">
                         <label>Год выпуска</label>
-                        <Slider2 min={yearMinDefault} max={yearMaxDefault} setSliderValue={this.setSliderValue}/>
+                        <Slider2 min={yearMinDefault} max={yearMaxDefault} setSliderValue={this.setSliderValue} paramType="yearIssue"/>
                     </Col>
+                </Row>
+                <Row>
+                    <Col sm="3">
+                        <span>Пробег</span>
+                        <Slider2 min={mileageMinDefault} max={mileageMaxDefault} setSliderValue={this.setSliderValue} paramType="mileage"/>
+                    </Col>
+                    <Col sm="3"><span>Цена</span></Col>
+                    <Col sm="3"><span>Дата добавления</span></Col>
                 </Row>
             </div>
         )
