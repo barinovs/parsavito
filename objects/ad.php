@@ -187,7 +187,7 @@ class Ad {
                   AND del='0'
                   AND yearIssue BETWEEN :year_min AND :year_max
                   AND mileage BETWEEN :mileage_min AND :mileage_max
-                  ORDER BY id desc
+                  ORDER BY " . $orderBy . " " . $orderType . "
                   LIMIT " . ($page - 1) * $limit . "," . $limit . "";
 
 
@@ -199,7 +199,7 @@ class Ad {
         $stmt->bindParam(':year_max', $year_max);
         $stmt->bindParam(':mileage_max', $mileage_max);
         $stmt->bindParam(':mileage_min', $mileage_min);
-        // $stmt->bindParam(':orderBy', $orderBy);
+        //$stmt->bindParam(':orderBy', $orderBy);
         // $stmt->bindParam(':orderType', $orderType);
 
         $stmt->execute();
