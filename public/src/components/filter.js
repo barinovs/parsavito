@@ -136,24 +136,20 @@ class Filter extends React.Component{
     }
 
     setSliderValue(value, paramType) {
-        console.log(paramType.paramType)
         switch (paramType.paramType) {
             case "yearIssue": {
-                console.log('Установка yearIssue');
                 this.setState({
                     yearMin: value.value.min,
                     yearMax: value.value.max
                 })
             }break
             case "mileage": {
-                console.log('Установка mileage');
                 this.setState({
                     mileageMin: value.value.min,
                     mileageMax: value.value.max
                 })
             }break
             case "price": {
-                console.log('Установка price');
                 this.setState({
                     priceMin: value.value.min,
                     priceMax: value.value.max
@@ -195,17 +191,17 @@ class Filter extends React.Component{
                     <Col sm="3"><label htmlFor="name">Марка - модель</label><input id="name" ref={(input) => this.nameInput = input}/></Col>
                     <Col sm="3">
                         <label>Год выпуска</label>
-                        <Slider2 min={yearMinDefault} max={yearMaxDefault} setSliderValue={this.setSliderValue} paramType="yearIssue"/>
+                        <Slider2 min={yearMinDefault} max={yearMaxDefault} setSliderValue={this.setSliderValue} paramType="yearIssue" step={1}/>
                     </Col>
                 </Row>
                 <Row>
                     <Col sm="3">
                         <span>Пробег</span>
-                        <Slider2 min={mileageMinDefault} max={mileageMaxDefault} setSliderValue={this.setSliderValue} paramType="mileage"/>
+                        <Slider2 min={mileageMinDefault} max={mileageMaxDefault} setSliderValue={this.setSliderValue} paramType="mileage" step={1000}/>
                     </Col>
                     <Col sm="3">
                         <span>Цена</span>
-                        <Slider2 min={priceMinDefault} max={priceMaxDefault} setSliderValue={this.setSliderValue} paramType="price"/>
+                        <Slider2 min={priceMinDefault} max={priceMaxDefault} setSliderValue={this.setSliderValue} paramType="price" step={5000}/>
                     </Col>
                     <Col sm="3"><span>Дата добавления</span></Col>
                 </Row>

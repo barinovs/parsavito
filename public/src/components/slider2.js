@@ -16,12 +16,13 @@ class Slider2 extends Component{
 
 
     render() {
-        const { min, max, paramType } = this.props
+        const { min, max, paramType, step } = this.props
         return(
               <InputRange
                 minValue={min}
                 maxValue={max}
                 value={this.state.value}
+                step={step}
                 onChange={value => { this.setState({ value }); this.props.setSliderValue({ value }, {paramType} ) }} />
         )
     }
