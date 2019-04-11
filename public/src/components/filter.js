@@ -16,7 +16,7 @@ import SliderComponent from './slider'
 
 import Slider2 from './slider2'
 
-import { getAllAds, setAdsNoLoad } from '../actions/index'
+import { getAllAds, setAdsNoLoad, setFilterParams } from '../actions/index'
 
 import { API_ENDPOINT } from '../helpers/Constant'
 
@@ -98,7 +98,7 @@ class Filter extends React.Component{
 
         const { yearMin, yearMax, mileageMin, mileageMax, priceMin, priceMax } = this.state
 
-        const { adQueryID, getAllAds, setAdsNoLoad } = this.props
+        const { adQueryID, getAllAds, setAdsNoLoad, setFilterParams } = this.props
 
         setAdsNoLoad()
 
@@ -115,6 +115,8 @@ class Filter extends React.Component{
             priceMin: priceMin,
             priceMax: priceMax
         }
+
+        setFilterParams(params)
 
         const queryString = parseQueryString(params)
 
@@ -223,7 +225,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getAllAds: bindActionCreators(getAllAds, dispatch),
-        setAdsNoLoad: bindActionCreators(setAdsNoLoad, dispatch)
+        setAdsNoLoad: bindActionCreators(setAdsNoLoad, dispatch),
+        setFilterParams: bindActionCreators(setFilterParams, dispatch)
     }
 }
 //export default connect(null, null)(Filter)

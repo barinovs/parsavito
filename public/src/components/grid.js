@@ -42,7 +42,7 @@ class Grid extends React.Component{
         const { refreshAds } = this.props
 
         const field = e.target.getAttribute('field')
-        const data = this.props.filteredAds.slice();
+        const data = this.props.ads.slice();
         const descending = this.state.sortBy === field && !this.state.descending;
         const sortBy = this.state.sortBy
 
@@ -68,13 +68,12 @@ class Grid extends React.Component{
             })
         }
 
-
-        refreshAds(data)
-
         this.setState({
             sortBy: field,
             descending: descending,
         });
+
+        refreshAds(data)
 
     }
 
@@ -83,36 +82,36 @@ class Grid extends React.Component{
         // const ads = this.state.data
         const ads = this.props.ads
 
-        const headers = TableHeaders
+        let headers = TableHeaders
 
         if (!adsIsLoad) {
             return <PreloadImage />
         }else{
             return(
                 <div>
-
-                <Table dark size="sm" bordered id="tbl">
-                <thead onClick={this.sort}>
-                    <tr>
-                        {
-                            headers.map( (item, idx) => {
-                                if (this.state.sortBy === item.field) {
-                                    item.title += this.state.descending ? ' \u2193' : ' \u2191'
+                    <Table dark size="sm" bordered id="tbl">
+                        <thead onClick={this.sort}>
+                            <tr>
+                                {
+                                    headers.map( (item, idx) => {
+                                        var _desc = ''
+                                        if (this.state.sortBy === item.field) {
+                                            _desc = this.state.descending ? ' \u2193' : ' \u2191'
+                                        }
+                                        return <th field={item.field} key={idx}>{item.title + _desc}</th>
+                                    } )
                                 }
-                                return <th field={item.field} key={idx}>{item.title}</th>
-                            } )
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    <Search />
-                    {
-                        ads.map( (ad, idx) => {
-                            return <Ad ad={ad} key={idx} className="bigImgModal"/>
-                        })
-                    }
-                </tbody>
-                </Table>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <Search />
+                            {
+                                ads.map( (ad, idx) => {
+                                    return <Ad ad={ad} key={idx} className="bigImgModal"/>
+                                })
+                            }
+                        </tbody>
+                    </Table>
                 </div>
             )
         }

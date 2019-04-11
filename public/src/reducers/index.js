@@ -7,7 +7,8 @@ import { ACTION_GET_ALL_ADS,
         ACTION_REFRESH_ADS,
         ACTION_FILTER_ADS,
         ACTION_SET_ADS_NO_LOAD,
-        ACTION_SET_AD_QUERY_ID
+        ACTION_SET_AD_QUERY_ID,
+        ACTION_SET_FILTER_PARAMS
     } from '../constants/action-types'
 
 import { DEFAULT_ITEM_PER_PAGE,
@@ -61,7 +62,7 @@ export const rootReducer = (state = initialState, action) => {
         case ACTION_REFRESH_ADS: {
             console.log('редюсер ACTION_REFRESH_ADS');
             return {...state,
-                        filteredAds: action.payload
+                        ads: action.payload
                     }
         }
         case ACTION_FILTER_ADS: {
@@ -80,6 +81,12 @@ export const rootReducer = (state = initialState, action) => {
             console.log('редюсер ACTION_SET_AD_QUERY_ID');
             return {...state,
                         adQueryID: action.adQueryID
+                    }
+        }
+        case ACTION_SET_FILTER_PARAMS: {
+            console.log('редюсер ACTION_SET_FILTER_PARAMS');
+            return {...state,
+                        filterParams: action.params
                     }
         }
     }

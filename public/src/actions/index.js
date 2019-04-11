@@ -6,7 +6,8 @@ import {
             ACTION_REFRESH_ADS,
             ACTION_FILTER_ADS,
             ACTION_SET_ADS_NO_LOAD,
-            ACTION_SET_AD_QUERY_ID
+            ACTION_SET_AD_QUERY_ID,
+            ACTION_SET_FILTER_PARAMS
         } from '../constants/action-types'
 
 // import AdService from '../services/adService'
@@ -92,5 +93,13 @@ export function setAdQueryID(adQueryID) {
     return {
         type: ACTION_SET_AD_QUERY_ID,
         adQueryID: adQueryID
+    }
+}
+
+export function setFilterParams(params) {
+    console.log('Сработал экшон setFilterParams ');
+    return {
+        type: ACTION_SET_FILTER_PARAMS,
+        params: params
     }
 }
