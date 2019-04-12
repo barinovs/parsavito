@@ -120,9 +120,6 @@ class Filter extends React.Component{
 
         const queryString = parseQueryString(params)
 
-        console.log('item_per_page: ' + itemPerPage);
-        console.log('queryString: ' + queryString);
-
         axios.get(API_ENDPOINT + 'getData.php'  + queryString,
                   {
                       headers: { 'Content-Type': 'application/json' }

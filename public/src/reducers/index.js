@@ -26,8 +26,21 @@ import { DEFAULT_ITEM_PER_PAGE,
     itemPerPage: DEFAULT_ITEM_PER_PAGE,
     adsQuery: new Array(),
     adsIsLoad: true,
-    adQueryID: DEFAULT_AD_QUERY_ID
-  };
+    adQueryID: DEFAULT_AD_QUERY_ID,
+    filterParams: {
+        orderBy: 'id',
+        itemPerPage: 30,
+        adQueryID: 1,
+        city: '',
+        name: '',
+        yearMin: 1940,
+        yearMax: 2019,
+        mileageMin: 0,
+        mileageMax: 1000000,
+        priceMin: 0,
+        priceMax: 5000000
+    }
+}
 
 
 export const rootReducer = (state = initialState, action) => {

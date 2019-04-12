@@ -8,7 +8,7 @@ import ReactSVG from 'react-svg'
 import { API_ENDPOINT } from './../helpers/Constant'
 import { parseQueryString } from '../helpers'
 
-import Pagination from './pagination'
+import PaginationComponent from './pagination'
 import GridHeader from './gridheader'
 import Filter from './filter'
 import ReactToExcel from 'react-html-table-to-excel'
@@ -70,7 +70,7 @@ class MainComponent extends React.Component{
               />
               <Filter />
               {/*<GridHeader /> */}
-              <Pagination />
+              <PaginationComponent />
 
               <Grid />
           </div>
