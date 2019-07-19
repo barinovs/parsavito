@@ -164,7 +164,7 @@ class Ad {
          // echo '$adsCount ' . strval($adsCount['adsCount']);
 
 
-        $query = "SELECT id, dateAdded, url, name, city, kpp, vin, mileage, enginePower, numberOfDoors, owners, conditionState, engineType, wheel, color, engineCapacity, model, yearIssue, bodyType, del, phone_number
+        $query = "SELECT id, dateAdded, url, name, city, kpp, vin, mileage, enginePower, numberOfDoors, owners, conditionState, engineType, wheel, color, engineCapacity, model, yearIssue, bodyType, del, phone_number, price
                   FROM ads a
                   WHERE ad_query_id = :ad_query_id AND city LIKE :where AND del='0'
                   ORDER BY id desc
@@ -183,18 +183,20 @@ class Ad {
 
         $urls = '';
 
-        foreach ($ads as $key => $value) {
-          foreach ($value as $_key => $_value) {
-            $ads_to_json[$key][$_key] = $_value;
+        
+		
+		// foreach ($ads as $key => $value) {
+          // foreach ($value as $_key => $_value) {
+            // $ads_to_json[$key][$_key] = $_value;
 
-            $queryPrices = "SELECT DISTINCT price, datechange FROM pricechanges WHERE url = '".$ads[$key]["url"]."' ORDER BY datechange desc ";
-            $stmt = $this->conn->prepare($queryPrices);
-            $stmt -> execute();
-            $prices = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // $queryPrices = "SELECT DISTINCT price, datechange FROM pricechanges WHERE url = '".$ads[$key]["url"]."' ORDER BY datechange desc ";
+            // $stmt = $this->conn->prepare($queryPrices);
+            // $stmt -> execute();
+            // $prices = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $ads_to_json[$key]["prices"] = $prices;
-          }
-        };
+            // $ads_to_json[$key]["prices"] = $prices;
+          // }
+        // };
 
         // var_dump($_GET);
         // echo '</br>';
@@ -203,7 +205,8 @@ class Ad {
         // echo $query . '</br>';
         //
         // echo "Количество строк: " . count($ads);
-        $ads_to_json1["records"] = $ads_to_json;
+        // $ads_to_json1["records"] = $ads_to_json;
+        $ads_to_json1["records"] = $ads;
         $ads_to_json1["recordCount"] = $adsCount;
         return json_encode($ads_to_json1);
 
