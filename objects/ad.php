@@ -117,6 +117,16 @@ class Ad {
         }
     }
 
+    public function getPrices($url) {
+        $query = "SELECT DISTINCT id, price, datechange FROM pricechanges WHERE url = :url ORDER BY datechange desc ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':url', $url);
+        $stmt -> execute();
+        $prices = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return json_encode($prices);
+    }
+
     public function readAll() {
       $query = "SELECT id, dateAdded, url, name, city, kpp, vin, mileage, enginePower, numberOfDoors, owners, conditionState, engineType, wheel, color, engineCapacity, model, yearIssue, bodyType, del
                 FROM ads a";
@@ -164,7 +174,7 @@ class Ad {
          // echo '$adsCount ' . strval($adsCount['adsCount']);
 
 
-        $query = "SELECT id, dateAdded, url, name, city, kpp, vin, mileage, enginePower, numberOfDoors, owners, conditionState, engineType, wheel, color, engineCapacity, model, yearIssue, bodyType, del, phone_number, price
+        $query = "SELECT id, dateAdded, url, name, city, kpp, vin, mileage, enginePower, numberOfDoors, owners, conditionState, engineType, wheel, color, engineCapacity, model, yearIssue, bodyType, del, phone_number, price, id_avito
                   FROM ads a
                   WHERE ad_query_id = :ad_query_id AND city LIKE :where AND del='0'
                   ORDER BY id desc
@@ -183,8 +193,8 @@ class Ad {
 
         $urls = '';
 
-        
-		
+
+
 		// foreach ($ads as $key => $value) {
           // foreach ($value as $_key => $_value) {
             // $ads_to_json[$key][$_key] = $_value;
@@ -211,6 +221,8 @@ class Ad {
         return json_encode($ads_to_json1);
 
     }
+
+
 
 
 }
