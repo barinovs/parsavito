@@ -127,6 +127,15 @@ class Ad {
         return json_encode($prices);
     }
 
+    public function getCities() {
+        $query = "SELECT DISTINCT city FROM ads WHERE ad_query_id <> '1' ORDER BY city";
+        $stmt = $this->conn->prepare($query);
+        $stmt -> execute();
+        $cities = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return json_encode($cities);
+    }
+
     public function readAll() {
       $query = "SELECT id, dateAdded, url, name, city, kpp, vin, mileage, enginePower, numberOfDoors, owners, conditionState, engineType, wheel, color, engineCapacity, model, yearIssue, bodyType, del
                 FROM ads a";
