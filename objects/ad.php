@@ -163,7 +163,8 @@ class Ad {
       return json_encode($ads_to_json);
     }
 
-    public function paginate($where, $page, $limit, $orderBy, $orderType, $ad_query_id) {
+    public function paginate($city, $minPrice, $maxPrice, $page, $limit, $orderBy, $orderType, $ad_query_id) {
+
     //     $query = "SELECT t.id, t.idais, t.idUser, t.dateTask, t.description, t.fullDescription, t.done, u.username, a.nameais
     //               FROM " . $this->table_name . " t LEFT JOIN users u on u.id = t.idUser
     //                                                 LEFT JOIN ais a on a.id = t.idAis
@@ -183,17 +184,21 @@ class Ad {
          // echo '$adsCount ' . strval($adsCount['adsCount']);
 
 
-        $query = "SELECT id, dateAdded, url, name, city, kpp, vin, mileage, enginePower, numberOfDoors, owners, conditionState, engineType, wheel, color, engineCapacity, model, yearIssue, bodyType, del, phone_number, price, id_avito
+        $query = "SELECT id, dateAdded, url, name, city, kpp, vin, mileage, enginePower, numberOfDoors, owners, conditionState, engineType, wheel, color, engineCapacity, model, yearIssue, bodyType, del, phone_number, price, id_avito, seller_name
                   FROM ads a
-                  WHERE ad_query_id = :ad_query_id AND city LIKE :where AND del='0'
+                  WHERE city LIKE :city
+                  AND price BETWEEN :minPrice and :maxPrice
+                  AND del='0'
                   ORDER BY id desc
                   LIMIT " . ($page - 1) * $limit . "," . $limit . "";
 
         // echo $query;
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':where', $where);
-        $stmt->bindParam(':ad_query_id', $ad_query_id);
+        $stmt->bindParam(':city', $city);
+        $stmt->bindParam(':minPrice', $minPrice);
+        $stmt->bindParam(':maxPrice', $maxPrice);
+        // $stmt->bindParam(':ad_query_id', $ad_query_id);
         // $stmt->bindParam(':orderBy', $orderBy);
         // $stmt->bindParam(':orderType', $orderType);
 

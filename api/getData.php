@@ -21,7 +21,10 @@
   $db = $database->getConnection();
   $ad = new Ad($db);
 
-  $where = '%%';
+  $city = '%%';
+  $minPrice = 0;
+  $maxPrice = 5000000;
+
   $orderBy = 't.description';
   $orderType = 'desc';
   $limit = 500;
@@ -30,7 +33,15 @@
 
   if(isset($_GET['city']))
       if(!empty($_GET['city']))
-          $where = '%' . $_GET['city'] . '%';
+          $city = '%' . $_GET['city'] . '%';
+
+  if(isset($_GET['minPrice']))
+      if(!empty($_GET['minPrice']))
+          $minPrice = $_GET['minPrice'];
+
+  if(isset($_GET['maxPrice']))
+      if(!empty($_GET['maxPrice']))
+          $maxPrice = $_GET['maxPrice'];
 
   if(isset($_GET['order_by']))
       if(!empty($_GET['order_by']))
@@ -53,7 +64,7 @@
           $ad_query_id = $_GET['ad_query_id'];
 
   // $results = $ad->readAll();
-  $results = $ad->paginate($where, $currentPage, $limit, $orderBy, $orderType, $ad_query_id);
+  $results = $ad->paginate($city, $minPrice, $maxPrice, $currentPage, $limit, $orderBy, $orderType, $ad_query_id);
 
   // output in json format
     echo $results;
